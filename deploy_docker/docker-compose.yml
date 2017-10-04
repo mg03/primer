@@ -1,0 +1,26 @@
+---
+version: '3'
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:${TAG}
+    environment: ['http.host=0.0.0.0', 'transport.host=127.0.0.1', 'ELASTIC_PASSWORD=${ELASTIC_PASSWORD}']
+    ports: ['127.0.0.1:9200:9200']
+
+  svc1:
+    image: ${docker_registry}/${docker_org}/${svc1_image}:release
+    environment: ['ES_PORT=${ES_PORT}']
+    ports: ['127.0.0.1:5000:5000']
+    links:
+      - es:elasticsearch
+    depends_on: ['elasticsearch']
+
+  svc2:
+    image: ${docker_registry}/${docker_org}/${svc2_image}:release
+    environment: ['Ext_DS=${Ext_DS}', 'ES_PORT=${ES_PORT}']
+    ports: ['127.0.0.1:5001:5001']
+    volumes:
+      - ./config/svc2.conf:/opt/svc2/app.conf
+    links:
+      - es:elasticsearch
+    depends_on: ['elasticsearch', 'svc1']
+

@@ -1,0 +1,18 @@
+[Unit]
+Description={{ prog }}
+After=network.target
+
+[Service]
+Type=notify
+Environment=LD_LIBRARY_PATH={{dir}}
+ExecStart={{ dir }}/{{ prog }}.py
+ExecReload=/bin/kill -s HUP $MAINPID
+LimitNOFILE=10000
+TimeoutStartSec=0
+TimeoutStopSec=60
+Restart=on-failure
+User={{username}}
+Group={{groupname}}
+
+[Install]
+WantedBy=multi-user.target

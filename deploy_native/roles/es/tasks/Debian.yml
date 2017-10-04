@@ -1,0 +1,6 @@
+---
+- name: Download es
+  get_url: url={{ es_url_deb }} dest={{tmp}}
+
+- name: Install es for Debian OS family
+  apt: deb={{tmp}}

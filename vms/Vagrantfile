@@ -1,0 +1,103 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+# https://askubuntu.com/questions/832137/ubuntu-xenial64-box-password
+# http://pythondata.com/jupyter-vagrant/
+# https://github.com/giabar/vagrant-jupyter
+# http://joelotz.github.io/running-ipython-notebook-from-vagrantvirtualbox.html
+# https://gist.github.com/davemkirk/90140b1edde8d18c8b83
+# https://gist.github.com/stevenbeeckman/beffbbd867b93575ac48
+# https://github.com/hoelsner/python-script-examples
+# http://ryanbigg.com/2014/10/ubuntu-ruby-ruby-install-chruby-and-you
+Vagrant.configure(2) do |config|
+
+  
+  config.vm.define "sles6" do |sles6|
+    sles6.vm.box = "stefaniuk/scientific-6.8"
+    # sles6.vm.box_version = "0.1.0"
+
+    sles6.vm.network "private_network", ip: "192.168.50.4"
+    sles6.vm.network "forwarded_port", guest: 9200, host: 19200
+    # sles6.ssh.private_key_path = "~/.ssh/id_rsa"  #File.expand_path("~/.ssh/id_rsa", __FILE__)
+    # sles6.ssh.insert_key = true
+    sles6.ssh.username = "vagrant"
+    sles6.ssh.password = "vagrant"
+
+    sles6.vm.provider "virtualbox" do |vb|
+      vb.memory = "512"
+      vb.gui = true
+      vb.cpus = "1"
+    end
+
+    sles6.vm.synced_folder "/Users/gardame/gitfork2/automaton", "/home/vagrant/automaton", disabled: true
+
+#    sles6.vm.provision "shell", inline: <<-SHELL
+#      sudo apt-get -y update
+#    SHELL
+
+#  config.vm.provision "shell", run: "always", inline: <<-SHELL
+#    ipython notebook --notebook-dir=/home/vagrant/notebook --no-browser --ip=0.0.0.0 &
+#  SHELL
+  end
+
+  # config.vm.define "sles7" do |sles7|
+  #   sles7.vm.box = "stefaniuk/scientific-7.2"
+  #   # sles7.vm.box_version = "0.0.5"
+
+  #   sles7.vm.network "private_network", ip: "192.168.50.5"
+  #   sles7.vm.network "forwarded_port", guest: 9200, host: 29200
+  #   sle7.ssh.private_key_path = File.expand_path("~/.ssh/id_rsa", __FILE__)
+
+  #   sles7.vm.provider "virtualbox" do |vb|
+  #     vb.memory = "512"
+  #     vb.gui = true
+  #     vb.cpus = "1"
+  #   end
+
+  config.vm.define "centos7" do |centos7|
+    centos7.vm.box = "centos/7"
+
+    centos7.vm.network "private_network", ip: "192.168.50.6"
+    centos7.vm.network "forwarded_port", guest: 9200, host: 29200
+    centos7.vm.network "forwarded_port", guest: 22, host: 2201, id: "ssh", auto_correct: true
+    # centos7.ssh.private_key_path = File.expand_path("~/.ssh/id_rsa", __FILE__)
+    # centos7.ssh.username = "vagrant"
+    # centos7.ssh.password = "vagrant"
+    
+    centos7.vm.provider "virtualbox" do |vb|
+      vb.memory = "512"
+      vb.gui = true
+      vb.cpus = "1"
+    end
+
+    centos7.vm.provision "shell", inline: <<-SHELL
+echo -e "grantva1\ngrantva1" | passwd vagrant
+sed -i 's|PasswordAuthentication no|PasswordAuthentication yes|' /etc/ssh/sshd_config
+systemctl restart sshd
+    SHELL
+  end
+
+  #   sles7.vm.synced_folder "/Users/gardame/gitfork2/automaton", "/home/vagrant/automaton", disabled: true
+
+  # end
+
+=begin
+  config.vm.provision "shell", inline: <<-SHELL
+anaconda=Anaconda3-4.4.0-Linux-x86_64.sh
+cd /vagrant
+echo -e "\n\nDownloading Anaconda installer. This may take more than a few minutes."
+wget -q -o /dev/null - "https://repo.continuum.io/archive/$anaconda"
+if [ -s $anaconda ]
+then
+  chmod +x $anaconda
+  ./$anaconda -b -p /opt/anaconda
+#  cat >> /home/vagrant/.bashrc << END
+#  # For anaconda
+#  PATH=/opt/anaconda/bin:$PATH
+#END
+else
+  echo "ERROR: Anaconda installer is not found"
+fi
+  SHELL
+=end
+
+end

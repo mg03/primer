@@ -1,0 +1,6 @@
+---
+prog: svc1
+groupname: "{{ prog }}"
+username: "{{ prog }}"
+
+dir: "/opt/primer_{{ prog}}"

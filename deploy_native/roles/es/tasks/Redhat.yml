@@ -1,0 +1,11 @@
+---
+- name: donwload es rpm
+  get_url:
+    url: "{{es_url_yum}}"
+    dest: "{{tmp}}/es.rpm"
+    mode: 0777
+
+- name: Install es for Redhat Centos family
+  yum:
+    name: "{{tmp}}/es.rpm"
+    state: present

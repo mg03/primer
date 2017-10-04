@@ -1,0 +1,26 @@
+Mon Oct  2 18:16:47 2017	127.0.0.1	GET	http://localhost:5000/
+Mon Oct  2 18:19:51 2017	127.0.0.1	GET	http://localhost:5000/
+Mon Oct  2 18:20:07 2017	127.0.0.1	PUT	http://localhost:5000/v1/api/populate
+Mon Oct  2 18:20:40 2017	127.0.0.1	GET	http://localhost:5000/
+Mon Oct  2 18:20:44 2017	127.0.0.1	PUT	http://localhost:5000/v1/api/populate
+Mon Oct  2 18:21:10 2017	127.0.0.1	POST	http://localhost:5000/v1/api/populate
+Mon Oct  2 18:21:26 2017	127.0.0.1	POST	http://localhost:5000/v1/api/populate
+Mon Oct  2 18:21:53 2017	127.0.0.1	POST	http://localhost:5000/v1/api/populate
+Mon Oct  2 18:22:18 2017	127.0.0.1	POST	http://localhost:5000/v1/api/populate
+Mon Oct  2 18:22:27 2017	127.0.0.1	POST	http://localhost:5000/v1/api/populate
+Mon Oct  2 18:22:34 2017	127.0.0.1	POST	http://localhost:5000/v1/api/populate
+Mon Oct  2 18:22:40 2017	127.0.0.1	POST	http://localhost:5000/v1/api/populate
+Mon Oct  2 18:23:43 2017	127.0.0.1	POST	http://localhost:5000/v1/api/populate
+Mon Oct  2 18:24:23 2017	127.0.0.1	POST	http://localhost:5000/v1/api/populate
+Mon Oct  2 18:24:48 2017	127.0.0.1	POST	http://localhost:5000/v1/api/populate
+Mon Oct  2 18:25:26 2017	127.0.0.1	POST	http://localhost:5000/v1/api/populate
+JSON received...
+{'age': 9}
+Mon Oct  2 18:33:27 2017	127.0.0.1	GET	http://localhost:5000/
+Mon Oct  2 18:41:14 2017	127.0.0.1	GET	http://localhost:5000/
+Mon Oct  2 18:41:35 2017	127.0.0.1	POST	http://localhost:5000/v1/api/populate
+JSON received...
+{'mass': '17', 'birth_year': '896BBY', 'gender': 'male', 'name': 'Yoda', 'films': ['https://swapi.co/api/films/2/', 'https://swapi.co/api/films/5/', 'https://swapi.co/api/films/4/', 'https://swapi.co/api/films/6/', 'https://swapi.co/api/films/3/'], 'edited': '2014-12-20T21:17:50.345000Z', 'created': '2014-12-15T12:26:01.042000Z', 'url': 'https://swapi.co/api/people/20/', 'species': ['https://swapi.co/api/species/6/'], 'height': '66', 'hair_color': 'white', 'skin_color': 'green', 'homeworld': 'https://swapi.co/api/planets/28/', 'vehicles': [], 'starships': [], 'eye_color': 'brown'}
+Mon Oct  2 18:48:36 2017	127.0.0.1	POST	http://localhost:5000/v1/api/populate
+JSON received...
+{'gender': 'male', 'height': '66', 'species': ['https://swapi.co/api/species/6/'], 'mass': '17', 'vehicles': [], 'films': ['https://swapi.co/api/films/2/', 'https://swapi.co/api/films/5/', 'https://swapi.co/api/films/4/', 'https://swapi.co/api/films/6/', 'https://swapi.co/api/films/3/'], 'eye_color': 'brown', 'skin_color': 'green', 'url': 'https://swapi.co/api/people/20/', 'edited': '2014-12-20T21:17:50.345000Z', 'created': '2014-12-15T12:26:01.042000Z', 'starships': [], 'name': 'Yoda', 'hair_color': 'white', 'homeworld': 'https://swapi.co/api/planets/28/', 'birth_year': '896BBY'}

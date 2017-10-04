@@ -1,0 +1,47 @@
+---
+- name: create grp
+  group:
+    name: "{{ groupname }}"
+    state: present
+
+- name: create user
+  user:
+    name: "{{ username }}"
+    system: yes
+    state: present
+
+- name: service dir
+  file:
+    path: {{ dir }}
+    state: directory
+    mode: 0755
+    owner: "{{ username }}"
+
+- name: untar
+  unarchive:
+    src: "{{prog}}.tar.gz"
+    dest: "{{dir}}"
+    extra_opts: [--strip-components=1]
+
+- name: install python deps
+  pip:
+    requirements: {{ dir }}/requirements.txt
+
+- name: copy init file
+  template:
+    src: init.j2
+    dest: "/etc/init.d/{{ prog }}"
+    mode: 0555
+  when: "{{ ansible_svc_mgr }} != systemd"
+
+- name: copy systemd file
+  template:
+    src: systemd.j2
+    dest: "/etc/systemd/system/{{ prog }}"
+  when: "{{ ansible_svc_mgr }} == systemd"
+
+- name: Ensure my daemon is started
+  service:
+    name: "{{ prog }}"
+    state: started
+    enabled: yes

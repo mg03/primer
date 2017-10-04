@@ -1,0 +1,13 @@
+---
+- hosts:
+    - localhost
+  become: no
+  become_user: root
+  become_method: sudo
+  force_handlers: True
+  vars_files:
+    - vars/encrypt_var.yml
+    - group_vars/main.yml
+  roles:
+    - {role: svc1, when: build_svc1 == "yes"}
+    - {role: svc2, when: build_svc2 == "yes"}

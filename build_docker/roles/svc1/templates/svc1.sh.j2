@@ -1,0 +1,3 @@
+#!/bin/bash
+
+exec gosu {{ app_user }} {{ app_dir }}/{{ app }}.py 2>&1 >> /log/{{ app }}.log

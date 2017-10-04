@@ -1,0 +1,5 @@
+#!/bin/bash
+
+export Ext_DS="${ext_ds}"
+
+exec gosu {{ app_user }} {{ app_dir }}/{{ app }}.py 2>&1 >> /log/{{ app }}.log

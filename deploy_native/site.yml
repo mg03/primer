@@ -1,0 +1,32 @@
+---
+- hosts: localhost
+  gather_facts: no
+  vars_prompt:
+  - name: target_host
+    prompt: please enter the target host IP
+    private: no
+  tasks:
+    - add_host:
+        name: "{{ target_host }}"
+        groups: dynamically_created_hosts
+
+- hosts:
+    - dynamically_created_hosts
+  become: yes
+  become_user: root
+  become_method: sudo
+  force_handlers: True
+  vars_files:
+    - vars/encrypt_var.yml
+    - group_vars/main.yml
+  roles:
+    - role: java
+      when: ansible_os_family == "RedHat" and deploy_java == "yes"
+      java_packages:
+        - java-1.8.0-openjdk
+    - {role: es, when: deploy_es == "yes"}
+    - {role: svc1, when: deploy_svc1 == "yes"}
+    - {role: svc2, when: deploy_svc2 == "yes"}
+    # - { role: es, when: deploy_es == 'yes' }
+    # - { role: svc1, when: deploy_svc1 == 'yes' }
+    # - { role: svc2, when: deploy_svc2 == 'yes' }

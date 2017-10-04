@@ -1,0 +1,5 @@
+---
+deploy_es: 'no'
+deploy_svc1: 'no'
+deploy_svc2: 'no'
+deploy_java: 'no'

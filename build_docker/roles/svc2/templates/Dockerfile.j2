@@ -1,0 +1,41 @@
+FROM {{ docker_base_image }}:{{ docker_base_image_version }}
+MAINTAINER someone@primer.com
+
+ENV {{app}} {{ docker_image_version }}
+
+ENV group {{ groupname}}
+ENV app {{app}}
+ENV version {{ app_version }}
+
+# Create application user
+RUN useradd {{ app_user }} -G ${groupname}
+
+#Install python3
+
+RUN add-apt-repository ppa:fkrull/deadsnakes && \
+    DEBIAN_FRONTEND=noninteractive apt-get update -yq && \
+    DEBIAN_FRONTEND=noninteractive apt-get install python3.5 python3.5-dev python3.5-pip -yq && \
+    cd /usr/local/bin && \
+    ln -s python3.5 python3 && \
+    pip3 install --upgrade pip
+
+RUN curl -o /usr/local/bin/gosu -SL "https://github.com/tianon/gosu/releases/download/${gosu_version}/gosu-amd64" && \
+    chmod +x /usr/local/bin/gosu
+
+# INstall application
+
+ADD {{ app }}.tar.gz /tmp
+RUN mkdir -p {{ app_install_path }} && mkdir -p /log && \
+    tar --strip-components=1 -xzvf /tmp/${app}-${version}.tar.gz -C {{ app_install_path }} && \
+    chmod -R 755 {{ app_install_path }} && chmod -R /log
+
+WORKDIR /{{ app_dir }}
+
+EXPOSE {{ app_port }}
+
+
+# Create application service
+RUN mkdir /etc/service/{{ app }}
+ADD {{ app }}.sh /etc/service/{{ app }}/run
+ADD {{app}}_finish.sh /etc/service/{{app}}/finish
+RUN chmod -R 755 /etc/service/{{ app }}

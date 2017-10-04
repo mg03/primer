@@ -1,0 +1,16 @@
+---
+app: svc1
+groupname: "{{ app }}"
+app_user: "{{ app }}"
+
+app_install_path: "/opt/primer_{{ app}}"
+gosu_version: 1.9
+
+docker_image: primer-{{ app }}
+docker_image_version: "0.1"
+
+docker_registry: docker.io
+docker_org: primer 
+
+docker_base_image: "phusion/baseimage"
+docker_base_image_version: "0.9.18"
